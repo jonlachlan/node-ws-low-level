@@ -1,13 +1,43 @@
 {
   "name": "ws-low-level",
-  "version": "0.0.0",
+  "type": "module",
+  "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --verbose"
   },
-  "author": "",
+  "author": "Jon Lachlan",
   "license": "GPL-3.0-or-later",
-  "description": "",
+  "description": "A Promise-based, low-level WebSocket server library",
+  "keywords": [
+    "websocket",
+    "message",
+    "promise-based",
+    "server",
+    "real-time",
+    "bidirectional",
+    "websocket frame",
+    "RFC 6455",
+    "websocket handshake",
+    "send websocket message",
+    "receive websocket message",
+    "async queue",
+    "parser",
+    "api",
+    "push",
+    "client-to-server",
+    "server-to-client",
+    "async generator",
+    "factory pattern",
+    "store"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jonlachlan/node-ws-low-level.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jonlachlan/node-ws-low-level/issues"
+  },
   "devDependencies": {
     "@babel/preset-env": "^7.24.5"
   }
