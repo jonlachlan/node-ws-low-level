@@ -1949,7 +1949,47 @@ describe('getParsedWebsocketFramesFactory', function() {
                 done: true
             });
         });
-        
+
+        it(
+            'throws an error if maxInMemoryStoreSize is exceeded after a partial frame ' +
+            'with partially filled payload is stored'
+        , async function () {
+                const parseMore =
+                    parseWebsocketFramesFactory(
+                        {
+                            maxInMemoryStoreSize: 1024
+                        }
+                    );
+                const frame =
+                    prepareWebsocketFrame(new Uint8Array(2048).fill(1));
+                let errorsCount =
+                    0;
+
+                try {
+                    const iterator =
+                        parseMore(
+                            frame.slice(
+                                0,
+                                4
+                            )
+                        );
+                    const parsedMessage =
+                        await iterator.next();
+                    const iterator2 =
+                        parseMore(
+                            frame.slice(
+                                4,
+                                2048
+                            )
+                        );
+                } catch (error) {
+                    expect(error.message).toEqual('Message max in-memory store size exceeded');
+
+                    errorsCount++;
+                }
+
+                expect(errorsCount).toEqual(1);
+            });
     });
     
 });

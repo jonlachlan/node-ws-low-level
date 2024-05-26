@@ -5,7 +5,17 @@
 import uint2ArrayFromUint8Value from './uint2ArrayFromUint8Value.js';
 import PartialFrameStore from './PartialFrameStore.js';
 
-export default function parseWebsocketFramesFactory () {
+export default function parseWebsocketFramesFactory (
+    /* Optional options object */
+    {
+        /*
+         * Optional <Integer> of max in-memory message store size, in bytes. This is not enforced
+         * on small messages, which do not necessarily make use of one of the in-memory store
+         * (PartialFrameStore).
+        */
+        maxInMemoryStoreSize
+    } = {}
+) {
     
     const previousPartialFrame = 
         new PartialFrameStore();
@@ -379,6 +389,16 @@ export default function parseWebsocketFramesFactory () {
                     return;
                 } else {
                     // Payload is only incomplete part of frame
+                    if (
+                        maxInMemoryStoreSize != undefined
+                        &&
+                        payload_length_value > maxInMemoryStoreSize
+                    ) {
+                        throw new Error(
+                            'Message max in-memory store size exceeded'
+                        );
+                    }
+
                     const payload = 
                         new Uint8Array(payload_length_value);
                     payload.set(

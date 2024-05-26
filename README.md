@@ -46,7 +46,12 @@ httpServer.on('upgrade', function (
     const send =
         sendFactory(socket);
     const getMessages =
-        getMessagesFactory(socket);
+        getMessagesFactory(
+            socket, 
+            { 
+                maxInMemoryStoreSize: 2147483648 // 2 GB 
+            }
+        );
 
     (async () => {
         for await (
@@ -183,7 +188,9 @@ Here is example html (place in an .html file like index.html) that would connect
 <body>
     <script>
         let ws = new WebSocket("ws://localhost:3000/");
-        ws.send("Hello from the WebSocket");
+        ws.onopen = function() {
+            ws.send("Hello from the WebSocket");
+        }
     </script>
 </body>
 </html>
@@ -212,7 +219,14 @@ optionally pass an array of header strings, for example to include a `sec-websoc
 ### getMessagesFactory
 ```javascript
 function getMessagesFactory (
-    socket /* <stream.Duplex> */
+    socket /* <stream.Duplex> */,
+    /* Optional options object */
+    {
+        /* Optional <Integer> of max in-memory message store size, in bytes. This is not enforced 
+         * on small messages, which do not necessarily make use of the in-memory store class 
+        */
+        maxInMemoryStoreSize 
+    } = {}
 ) {
     // ...
 }

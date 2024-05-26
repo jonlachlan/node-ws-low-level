@@ -35,503 +35,575 @@ describe('FragmentedMessageStore', function () {
     describe(
         'start()'
     , function () {
-    
-        it(
-            'throws an error if rsv1 is not an integer between 0 and 1'
-        , function () {
-        
-            let errorsCount = 
-                0;
-            const store = 
-                new FragmentedMessageStore();
-        
-            try {
-                store.start({
-                    rsv2: 0,
-                    rsv3: 0,
-                    opcode: 0x2,
-                    mask: 0,
-                    payload: new Uint8Array(8).fill(1)
+
+            it(
+                'throws an error if rsv1 is not an integer between 0 and 1'
+                , function () {
+
+                    let errorsCount =
+                        0;
+                    const store =
+                        new FragmentedMessageStore();
+
+                    try {
+                        store.start({
+                            rsv2: 0,
+                            rsv3: 0,
+                            opcode: 0x2,
+                            mask: 0,
+                            payload: new Uint8Array(8).fill(1)
+                        });
+                    } catch (error) {
+                        expect(error.message).toEqual(
+                            'rsv1 is not an integer between 0 and 1'
+                        );
+                        errorsCount++;
+                    }
+                    expect(errorsCount).toEqual(1);
+                    errorsCount =
+                        0;
+
+                    try {
+                        store.start({
+                            rsv1: 1.5,
+                            rsv2: 0,
+                            rsv3: 0,
+                            opcode: 0x2,
+                            mask: 0,
+                            payload: new Uint8Array(8).fill(1)
+                        });
+                    } catch (error) {
+                        expect(error.message).toEqual(
+                            'rsv1 is not an integer between 0 and 1'
+                        );
+                        errorsCount++;
+                    }
+                    expect(errorsCount).toEqual(1);
+                    errorsCount =
+                        0;
+
+                    try {
+                        store.start({
+                            rsv1: -1,
+                            rsv2: 0,
+                            rsv3: 0,
+                            opcode: 0x2,
+                            mask: 0,
+                            payload: new Uint8Array(8).fill(1)
+                        });
+                    } catch (error) {
+                        expect(error.message).toEqual(
+                            'rsv1 is not an integer between 0 and 1'
+                        );
+                        errorsCount++;
+                    }
+                    expect(errorsCount).toEqual(1);
+                    errorsCount =
+                        0;
+
+                    try {
+                        store.start({
+                            rsv1: 2,
+                            rsv2: 0,
+                            rsv3: 0,
+                            opcode: 0x2,
+                            mask: 0,
+                            payload: new Uint8Array(8).fill(1)
+                        });
+                    } catch (error) {
+                        expect(error.message).toEqual(
+                            'rsv1 is not an integer between 0 and 1'
+                        );
+                        errorsCount++;
+                    }
+                    expect(errorsCount).toEqual(1);
                 });
-            } catch (error) {
-                expect(error.message).toEqual(
-                    'rsv1 is not an integer between 0 and 1'
-                );
-                errorsCount++;
-            }
-            expect(errorsCount).toEqual(1);
-            errorsCount = 
-                0;
-        
-            try {
-                store.start({
-                    rsv1: 1.5,
-                    rsv2: 0,
-                    rsv3: 0,
-                    opcode: 0x2,
-                    mask: 0,
-                    payload: new Uint8Array(8).fill(1)
+
+            it(
+                'throws an error if rsv2 is not an integer between 0 and 1'
+                , function () {
+
+                    let errorsCount =
+                        0;
+                    const store =
+                        new FragmentedMessageStore();
+
+                    try {
+                        store.start({
+                            rsv1: 0,
+                            rsv3: 0,
+                            opcode: 0x2,
+                            mask: 0,
+                            payload: new Uint8Array(8).fill(1)
+                        });
+                    } catch (error) {
+                        expect(error.message).toEqual(
+                            'rsv2 is not an integer between 0 and 1'
+                        );
+                        errorsCount++;
+                    }
+                    expect(errorsCount).toEqual(1);
+                    errorsCount =
+                        0;
+
+                    try {
+                        store.start({
+                            rsv1: 0,
+                            rsv2: 1.5,
+                            rsv3: 0,
+                            opcode: 0x2,
+                            mask: 0,
+                            payload: new Uint8Array(8).fill(1)
+                        });
+                    } catch (error) {
+                        expect(error.message).toEqual(
+                            'rsv2 is not an integer between 0 and 1'
+                        );
+                        errorsCount++;
+                    }
+                    expect(errorsCount).toEqual(1);
+                    errorsCount =
+                        0;
+
+                    try {
+                        store.start({
+                            rsv1: 0,
+                            rsv2: -1,
+                            rsv3: 0,
+                            opcode: 0x2,
+                            mask: 0,
+                            payload: new Uint8Array(8).fill(1)
+                        });
+                    } catch (error) {
+                        expect(error.message).toEqual(
+                            'rsv2 is not an integer between 0 and 1'
+                        );
+                        errorsCount++;
+                    }
+                    expect(errorsCount).toEqual(1);
+                    errorsCount =
+                        0;
+
+                    try {
+                        store.start({
+                            rsv1: 0,
+                            rsv2: 2,
+                            rsv3: 0,
+                            opcode: 0x2,
+                            mask: 0,
+                            payload: new Uint8Array(8).fill(1)
+                        });
+                    } catch (error) {
+                        expect(error.message).toEqual(
+                            'rsv2 is not an integer between 0 and 1'
+                        );
+                        errorsCount++;
+                    }
+                    expect(errorsCount).toEqual(1);
                 });
-            } catch (error) {
-                expect(error.message).toEqual(
-                    'rsv1 is not an integer between 0 and 1'
-                );
-                errorsCount++;
-            }
-            expect(errorsCount).toEqual(1);
-            errorsCount = 
-                0;
-        
-            try {
-                store.start({
-                    rsv1: -1,
-                    rsv2: 0,
-                    rsv3: 0,
-                    opcode: 0x2,
-                    mask: 0,
-                    payload: new Uint8Array(8).fill(1)
+
+            it(
+                'throws an error if rsv3 is not an integer between 0 and 1'
+                , function () {
+
+                    let errorsCount =
+                        0;
+                    const store =
+                        new FragmentedMessageStore();
+
+                    try {
+                        store.start({
+                            rsv1: 0,
+                            rsv2: 0,
+                            opcode: 0x2,
+                            mask: 0,
+                            payload: new Uint8Array(8).fill(1)
+                        });
+                    } catch (error) {
+                        expect(error.message).toEqual(
+                            'rsv3 is not an integer between 0 and 1'
+                        );
+                        errorsCount++;
+                    }
+                    expect(errorsCount).toEqual(1);
+                    errorsCount =
+                        0;
+
+                    try {
+                        store.start({
+                            rsv1: 0,
+                            rsv2: 0,
+                            rsv3: 1.5,
+                            opcode: 0x2,
+                            mask: 0,
+                            payload: new Uint8Array(8).fill(1)
+                        });
+                    } catch (error) {
+                        expect(error.message).toEqual(
+                            'rsv3 is not an integer between 0 and 1'
+                        );
+                        errorsCount++;
+                    }
+                    expect(errorsCount).toEqual(1);
+                    errorsCount =
+                        0;
+
+                    try {
+                        store.start({
+                            rsv1: 0,
+                            rsv2: 0,
+                            rsv3: -1,
+                            opcode: 0x2,
+                            mask: 0,
+                            payload: new Uint8Array(8).fill(1)
+                        });
+                    } catch (error) {
+                        expect(error.message).toEqual(
+                            'rsv3 is not an integer between 0 and 1'
+                        );
+                        errorsCount++;
+                    }
+                    expect(errorsCount).toEqual(1);
+                    errorsCount =
+                        0;
+
+                    try {
+                        store.start({
+                            rsv1: 0,
+                            rsv2: 0,
+                            rsv3: 2,
+                            opcode: 0x2,
+                            mask: 0,
+                            payload: new Uint8Array(8).fill(1)
+                        });
+                    } catch (error) {
+                        expect(error.message).toEqual(
+                            'rsv3 is not an integer between 0 and 1'
+                        );
+                        errorsCount++;
+                    }
+                    expect(errorsCount).toEqual(1);
                 });
-            } catch (error) {
-                expect(error.message).toEqual(
-                    'rsv1 is not an integer between 0 and 1'
-                );
-                errorsCount++;
-            }
-            expect(errorsCount).toEqual(1);
-            errorsCount = 
-                0;
-        
-            try {
-                store.start({
-                    rsv1: 2,
-                    rsv2: 0,
-                    rsv3: 0,
-                    opcode: 0x2,
-                    mask: 0,
-                    payload: new Uint8Array(8).fill(1)
+
+            it(
+                'throws an error if opcode is not a hexidecimal number between 0x0 and 0xF'
+                , function () {
+
+                    let errorsCount =
+                        0;
+                    const store =
+                        new FragmentedMessageStore();
+
+                    try {
+                        store.start({
+                            rsv1: 0,
+                            rsv2: 0,
+                            rsv3: 0,
+                            mask: 0,
+                            payload: new Uint8Array(8).fill(1)
+                        });
+                    } catch (error) {
+                        expect(error.message).toEqual(
+                            'opcode is not a hexidecimal number between 0x0 and 0xF'
+                        );
+                        errorsCount++;
+                    }
+                    expect(errorsCount).toEqual(1);
+                    errorsCount =
+                        0;
+
+                    try {
+                        store.start({
+                            rsv1: 0,
+                            rsv2: 0,
+                            rsv3: 0,
+                            // floating-point JavaScript does not produce an integer
+                            opcode: (0.1 + 0.2) * 10,
+                            mask: 0,
+                            payload: new Uint8Array(8).fill(1)
+                        });
+                    } catch (error) {
+                        expect(error.message).toEqual(
+                            'opcode is not a hexidecimal number between 0x0 and 0xF'
+                        );
+                        errorsCount++;
+                    }
+                    expect(errorsCount).toEqual(1);
+                    errorsCount =
+                        0;
+
+                    try {
+                        store.start({
+                            rsv1: 0,
+                            rsv2: 0,
+                            rsv3: 0,
+                            opcode: 16,
+                            mask: 0,
+                            payload: new Uint8Array(8).fill(1)
+                        });
+                    } catch (error) {
+                        expect(error.message).toEqual(
+                            'opcode is not a hexidecimal number between 0x0 and 0xF'
+                        );
+                        errorsCount++;
+                    }
+                    expect(errorsCount).toEqual(1);
+                    errorsCount =
+                        0;
+
+                    try {
+                        store.start({
+                            rsv1: 0,
+                            rsv2: 0,
+                            rsv3: 0,
+                            opcode: -1,
+                            mask: 0,
+                            payload: new Uint8Array(8).fill(1)
+                        });
+                    } catch (error) {
+                        expect(error.message).toEqual(
+                            'opcode is not a hexidecimal number between 0x0 and 0xF'
+                        );
+                        errorsCount++;
+                    }
+                    expect(errorsCount).toEqual(1);
+                    errorsCount =
+                        0;
                 });
-            } catch (error) {
-                expect(error.message).toEqual(
-                    'rsv1 is not an integer between 0 and 1'
-                );
-                errorsCount++;
-            }
-            expect(errorsCount).toEqual(1);
+
+            it(
+                'throws an error if mask is not an integer between 0 and 1'
+                , function () {
+
+                    let errorsCount =
+                        0;
+                    const store =
+                        new FragmentedMessageStore();
+
+                    try {
+                        store.start({
+                            rsv1: 0,
+                            rsv2: 0,
+                            rsv3: 0,
+                            opcode: 0x2,
+                            payload: new Uint8Array(8).fill(1)
+                        });
+                    } catch (error) {
+                        expect(error.message).toEqual(
+                            'mask is not an integer between 0 and 1'
+                        );
+                        errorsCount++;
+                    }
+                    expect(errorsCount).toEqual(1);
+                    errorsCount =
+                        0;
+
+                    try {
+                        store.start({
+                            rsv1: 0,
+                            rsv2: 0,
+                            rsv3: 0,
+                            opcode: 0x2,
+                            mask: 1.5,
+                            payload: new Uint8Array(8).fill(1)
+                        });
+                    } catch (error) {
+                        expect(error.message).toEqual(
+                            'mask is not an integer between 0 and 1'
+                        );
+                        errorsCount++;
+                    }
+                    expect(errorsCount).toEqual(1);
+                    errorsCount =
+                        0;
+
+                    try {
+                        store.start({
+                            rsv1: 0,
+                            rsv2: 0,
+                            rsv3: 0,
+                            opcode: 0x2,
+                            mask: -1,
+                            payload: new Uint8Array(8).fill(1)
+                        });
+                    } catch (error) {
+                        expect(error.message).toEqual(
+                            'mask is not an integer between 0 and 1'
+                        );
+                        errorsCount++;
+                    }
+                    expect(errorsCount).toEqual(1);
+                    errorsCount =
+                        0;
+
+                    try {
+                        store.start({
+                            rsv1: 0,
+                            rsv2: 0,
+                            rsv3: 0,
+                            opcode: 0x2,
+                            mask: 2,
+                            payload: new Uint8Array(8).fill(1)
+                        });
+                    } catch (error) {
+                        expect(error.message).toEqual(
+                            'mask is not an integer between 0 and 1'
+                        );
+                        errorsCount++;
+                    }
+                    expect(errorsCount).toEqual(1);
+                });
+
+            it(
+                'throws and error if payload is not an instance of Uint8Array'
+                , function () {
+
+                    let errorsCount =
+                        0;
+                    const store =
+                        new FragmentedMessageStore();
+
+                    try {
+                        store.start({
+                            rsv1: 0,
+                            rsv2: 0,
+                            rsv3: 0,
+                            opcode: 0x2,
+                            mask: 0
+                        });
+                    } catch (error) {
+                        expect(error.message).toEqual(
+                            'payload is not an instance of Uint8Array'
+                        );
+                        errorsCount++;
+                    }
+                    expect(errorsCount).toEqual(1);
+                    errorsCount =
+                        0;
+
+                    try {
+                        store.start({
+                            rsv1: 0,
+                            rsv2: 0,
+                            rsv3: 0,
+                            opcode: 0x2,
+                            mask: 0,
+                            payload: new Uint8Array(0)
+                        });
+                        store.finish();
+                    } catch (error) {
+                        errorsCount++;
+                    }
+                    expect(errorsCount).toEqual(0);
+                });
+
+            it(
+                'throws and error if max in memory store size is exceeded'
+                , function () {
+
+                    let errorsCount =
+                        0;
+                    const store =
+                        new FragmentedMessageStore(
+                            {
+                                maxInMemoryStoreSize: 24
+                            });
+
+                    try {
+                        store.start({
+                            rsv1: 0,
+                            rsv2: 0,
+                            rsv3: 0,
+                            opcode: 0x2,
+                            mask: 0,
+                            payload: new Uint8Array(25).fill(1)
+                        });
+                    } catch (error) {
+                        expect(error.message).toEqual(
+                            'Message max in-memory store size exceeded'
+                        );
+
+                        errorsCount++;
+                    }
+
+                    expect(errorsCount).toEqual(1);
+                }
+            );
         });
-    
-        it(
-            'throws an error if rsv2 is not an integer between 0 and 1'
-        , function () {
-        
-            let errorsCount = 
-                0;
-            const store = 
-                new FragmentedMessageStore();
-            
-            try {
-                store.start({
-                    rsv1: 0,
-                    rsv3: 0,
-                    opcode: 0x2,
-                    mask: 0,
-                    payload: new Uint8Array(8).fill(1)
-                });
-            } catch (error) {
-                expect(error.message).toEqual(
-                    'rsv2 is not an integer between 0 and 1'
-                );
-                errorsCount++;
-            }
-            expect(errorsCount).toEqual(1);
-            errorsCount = 
-                0;
-        
-            try {
-                store.start({
-                    rsv1: 0,
-                    rsv2: 1.5,
-                    rsv3: 0,
-                    opcode: 0x2,
-                    mask: 0,
-                    payload: new Uint8Array(8).fill(1)
-                });
-            } catch (error) {
-                expect(error.message).toEqual(
-                    'rsv2 is not an integer between 0 and 1'
-                );
-                errorsCount++;
-            }
-            expect(errorsCount).toEqual(1);
-            errorsCount = 
-                0;
-        
-            try {
-                store.start({
-                    rsv1: 0,
-                    rsv2: -1,
-                    rsv3: 0,
-                    opcode: 0x2,
-                    mask: 0,
-                    payload: new Uint8Array(8).fill(1)
-                });
-            } catch (error) {
-                expect(error.message).toEqual(
-                    'rsv2 is not an integer between 0 and 1'
-                );
-                errorsCount++;
-            }
-            expect(errorsCount).toEqual(1);
-            errorsCount = 
-                0;
-        
-            try {
-                store.start({
-                    rsv1: 0,
-                    rsv2: 2,
-                    rsv3: 0,
-                    opcode: 0x2,
-                    mask: 0,
-                    payload: new Uint8Array(8).fill(1)
-                });
-            } catch (error) {
-                expect(error.message).toEqual(
-                    'rsv2 is not an integer between 0 and 1'
-                );
-                errorsCount++;
-            }
-            expect(errorsCount).toEqual(1);
-        });
-    
-        it(
-            'throws an error if rsv3 is not an integer between 0 and 1'
-        , function () {
-        
-            let errorsCount = 
-                0;
-            const store = 
-                new FragmentedMessageStore();
-            
-            try {
-                store.start({
-                    rsv1: 0,
-                    rsv2: 0,
-                    opcode: 0x2,
-                    mask: 0,
-                    payload: new Uint8Array(8).fill(1)
-                });
-            } catch (error) {
-                expect(error.message).toEqual(
-                    'rsv3 is not an integer between 0 and 1'
-                );
-                errorsCount++;
-            }
-            expect(errorsCount).toEqual(1);
-            errorsCount = 
-                0;
-        
-            try {
-                store.start({
-                    rsv1: 0,
-                    rsv2: 0,
-                    rsv3: 1.5,
-                    opcode: 0x2,
-                    mask: 0,
-                    payload: new Uint8Array(8).fill(1)
-                });
-            } catch (error) {
-                expect(error.message).toEqual(
-                    'rsv3 is not an integer between 0 and 1'
-                );
-                errorsCount++;
-            }
-            expect(errorsCount).toEqual(1);
-            errorsCount = 
-                0;
-        
-            try {
-                store.start({
-                    rsv1: 0,
-                    rsv2: 0,
-                    rsv3: -1,
-                    opcode: 0x2,
-                    mask: 0,
-                    payload: new Uint8Array(8).fill(1)
-                });
-            } catch (error) {
-                expect(error.message).toEqual(
-                    'rsv3 is not an integer between 0 and 1'
-                );
-                errorsCount++;
-            }
-            expect(errorsCount).toEqual(1);
-            errorsCount = 
-                0;
-        
-            try {
-                store.start({
-                    rsv1: 0,
-                    rsv2: 0,
-                    rsv3: 2,
-                    opcode: 0x2,
-                    mask: 0,
-                    payload: new Uint8Array(8).fill(1)
-                });
-            } catch (error) {
-                expect(error.message).toEqual(
-                    'rsv3 is not an integer between 0 and 1'
-                );
-                errorsCount++;
-            }
-            expect(errorsCount).toEqual(1);
-        });
-    
-        it(
-            'throws an error if opcode is not a hexidecimal number between 0x0 and 0xF'
-        , function () {
-        
-            let errorsCount = 
-                0;
-            const store = 
-                new FragmentedMessageStore();
-            
-            try {
-                store.start({
-                    rsv1: 0,
-                    rsv2: 0,
-                    rsv3: 0,
-                    mask: 0,
-                    payload: new Uint8Array(8).fill(1)
-                });
-            } catch (error) {
-                expect(error.message).toEqual(
-                    'opcode is not a hexidecimal number between 0x0 and 0xF'
-                );
-                errorsCount++;
-            }
-            expect(errorsCount).toEqual(1);
-            errorsCount = 
-                0;
-        
-            try {
-                store.start({
-                    rsv1: 0,
-                    rsv2: 0,
-                    rsv3: 0,
-                    // floating-point JavaScript does not produce an integer
-                    opcode: (0.1 + 0.2) * 10,
-                    mask: 0,
-                    payload: new Uint8Array(8).fill(1)
-                });
-            } catch (error) {
-                expect(error.message).toEqual(
-                    'opcode is not a hexidecimal number between 0x0 and 0xF'
-                );
-                errorsCount++;
-            }
-            expect(errorsCount).toEqual(1);
-            errorsCount = 
-                0;
-        
-            try {
-                store.start({
-                    rsv1: 0,
-                    rsv2: 0,
-                    rsv3: 0,
-                    opcode: 16,
-                    mask: 0,
-                    payload: new Uint8Array(8).fill(1)
-                });
-            } catch (error) {
-                expect(error.message).toEqual(
-                    'opcode is not a hexidecimal number between 0x0 and 0xF'
-                );
-                errorsCount++;
-            }
-            expect(errorsCount).toEqual(1);
-            errorsCount = 
-                0;
-            
-            try {
-                store.start({
-                    rsv1: 0,
-                    rsv2: 0,
-                    rsv3: 0,
-                    opcode: -1,
-                    mask: 0,
-                    payload: new Uint8Array(8).fill(1)
-                });
-            } catch (error) {
-                expect(error.message).toEqual(
-                    'opcode is not a hexidecimal number between 0x0 and 0xF'
-                );
-                errorsCount++;
-            }
-            expect(errorsCount).toEqual(1);
-            errorsCount = 
-                0;
-        });
-    
-        it(
-            'throws an error if mask is not an integer between 0 and 1'
-        , function () {
-        
-            let errorsCount = 
-                0;
-            const store = 
-                new FragmentedMessageStore();
-            
-            try {
-                store.start({
-                    rsv1: 0,
-                    rsv2: 0,
-                    rsv3: 0,
-                    opcode: 0x2,
-                    payload: new Uint8Array(8).fill(1)
-                });
-            } catch (error) {
-                expect(error.message).toEqual(
-                    'mask is not an integer between 0 and 1'
-                );
-                errorsCount++;
-            }
-            expect(errorsCount).toEqual(1);
-            errorsCount = 
-                0;
-        
-            try {
-                store.start({
-                    rsv1: 0,
-                    rsv2: 0,
-                    rsv3: 0,
-                    opcode: 0x2,
-                    mask: 1.5,
-                    payload: new Uint8Array(8).fill(1)
-                });
-            } catch (error) {
-                expect(error.message).toEqual(
-                    'mask is not an integer between 0 and 1'
-                );
-                errorsCount++;
-            }
-            expect(errorsCount).toEqual(1);
-            errorsCount = 
-                0;
-        
-            try {
-                store.start({
-                    rsv1: 0,
-                    rsv2: 0,
-                    rsv3: 0,
-                    opcode: 0x2,
-                    mask: -1,
-                    payload: new Uint8Array(8).fill(1)
-                });
-            } catch (error) {
-                expect(error.message).toEqual(
-                    'mask is not an integer between 0 and 1'
-                );
-                errorsCount++;
-            }
-            expect(errorsCount).toEqual(1);
-            errorsCount = 
-                0;
-        
-            try {
-                store.start({
-                    rsv1: 0,
-                    rsv2: 0,
-                    rsv3: 0,
-                    opcode: 0x2,
-                    mask: 2,
-                    payload: new Uint8Array(8).fill(1)
-                });
-            } catch (error) {
-                expect(error.message).toEqual(
-                    'mask is not an integer between 0 and 1'
-                );
-                errorsCount++;
-            }
-            expect(errorsCount).toEqual(1);
-        });
-    
-        it(
-            'throws and error if payload is not an instance of Uint8Array'
-        , function () {
-        
-            let errorsCount = 
-                0;
-            const store = 
-                new FragmentedMessageStore();
-            
-            try {
-                store.start({
-                    rsv1: 0,
-                    rsv2: 0,
-                    rsv3: 0,
-                    opcode: 0x2,
-                    mask: 0
-                });
-            } catch (error) {
-                expect(error.message).toEqual(
-                    'payload is not an instance of Uint8Array'
-                );
-                errorsCount++;
-            }
-            expect(errorsCount).toEqual(1);
-            errorsCount = 
-                0;
-        
-            try {
-                store.start({
-                    rsv1: 0,
-                    rsv2: 0,
-                    rsv3: 0,
-                    opcode: 0x2,
-                    mask: 0,
-                    payload: new Uint8Array(0)
-                });
-                store.finish();
-            } catch (error) {
-                errorsCount++;
-            }
-            expect(errorsCount).toEqual(0);
-        });
-    
-    });
-    
-    it(
-        'appends payloads with addPayload()'
+
+    describe(
+        'addPayload'
     , function () {
-    
-        const store = 
-            new FragmentedMessageStore();
-        const initialFrame = {
-            rsv1: 0,
-            rsv2: 0,
-            rsv3: 0,
-            opcode: 0x2,
-            mask: 0,
-            payload: new Uint8Array(8).fill(1)
-        };
-        store.start(
-            initialFrame
-        );
-        store.addPayload(
-            new Uint8Array(20).fill(2)
-        );
-        store.addPayload(
-            new Uint8Array(12).fill(3)
-        );
-        const message = 
-            store.finish();
-        expect(message).toEqual({
-            ...initialFrame,
-            payload: 
-                new Uint8Array(40)
-                    .fill(1, 0, 8)
-                    .fill(2, 8, 28)
-                    .fill(3, 28, 40)
-        });
+
+        it(
+            'appends payloads with addPayload()'
+            , function () {
+
+                const store =
+                    new FragmentedMessageStore();
+                const initialFrame = {
+                    rsv1: 0,
+                    rsv2: 0,
+                    rsv3: 0,
+                    opcode: 0x2,
+                    mask: 0,
+                    payload: new Uint8Array(8).fill(1)
+                };
+                store.start(
+                    initialFrame
+                );
+                store.addPayload(
+                    new Uint8Array(20).fill(2)
+                );
+                store.addPayload(
+                    new Uint8Array(12).fill(3)
+                );
+                const message =
+                    store.finish();
+                expect(message).toEqual({
+                    ...initialFrame,
+                    payload:
+                        new Uint8Array(40)
+                            .fill(1, 0, 8)
+                            .fill(2, 8, 28)
+                            .fill(3, 28, 40)
+                });
+            });
+
+        it(
+            'throws and error if max in memory store size is exceeded when adding a payload'
+            , function () {
+
+                let errorsCount =
+                    0;
+                const store =
+                    new FragmentedMessageStore(
+                        {
+                            maxInMemoryStoreSize: 24
+                        });
+
+                store.start({
+                    rsv1: 0,
+                    rsv2: 0,
+                    rsv3: 0,
+                    opcode: 0x2,
+                    mask: 0,
+                    payload: new Uint8Array(1).fill(1)
+                });
+
+
+                try {
+                    store.addPayload(new Uint8Array(24).fill(2));
+                } catch (error) {
+                    expect(error.message).toEqual(
+                        'Message max in-memory store size exceeded'
+                    );
+
+                    errorsCount++;
+                }
+
+                expect(errorsCount).toEqual(1);
+            });
     });
     
     it(

@@ -2,7 +2,15 @@
  * Copyright (c) Jon Lachlan 2020
 */
 
-export default function FragmentedMessageStore () {
+export default function FragmentedMessageStore (
+    /* Optional options object*/
+    {
+        /*
+        /* Optional <Integer> of max in-memory message store size, in bytes.
+        */
+        maxInMemoryStoreSize
+    } = {}
+) {
     
     const messageStore = 
         [];
@@ -78,6 +86,12 @@ export default function FragmentedMessageStore () {
                 throw new Error(
                     'payload is not an instance of Uint8Array'
                 );
+
+            if (maxInMemoryStoreSize != undefined && payload.length > maxInMemoryStoreSize) {
+                throw new Error(
+                    'Message max in-memory store size exceeded'
+                );
+            }
                             
             messageStore.push({
                 rsv1,
@@ -95,6 +109,21 @@ export default function FragmentedMessageStore () {
             payloads.push(
                 payload
             );
+
+            if (
+                maxInMemoryStoreSize != undefined
+                &&
+                payloads.reduce(
+                    (
+                        length,
+                        payload
+                    ) => length + payload.length
+                    , 0 /* initialValue */) > maxInMemoryStoreSize
+            ) {
+                throw new Error(
+                    "Message max in-memory store size exceeded"
+                );
+            }
         }
         
         isStarted () {

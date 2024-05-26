@@ -6,11 +6,24 @@ import parseWebsocketFramesFactory from './parseWebsocketFramesFactory.js';
 import AwaitQueue from './AwaitQueue.js';
 
 export default function getParsedWebsocketFramesFactory (
-    socket /* <stream.Duplex> */
+    socket /* <stream.Duplex> */,
+    /* Optional options object */
+    {
+        /*
+         * Optional <Integer> of max in-memory message store size, in bytes. This is not enforced
+         * on small messages, which do not necessarily make use of one of the in-memory store
+         * (PartialFrameStore).
+        */
+        maxInMemoryStoreSize
+    } = {}
 ) {
 
     const parseMore = 
-        parseWebsocketFramesFactory();
+        parseWebsocketFramesFactory(
+            {
+                maxInMemoryStoreSize
+            }
+        );
     
     /*
      * Queue system
