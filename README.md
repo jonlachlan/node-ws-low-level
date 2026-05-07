@@ -292,6 +292,14 @@ text (opcode 1). Other opcodes can be optionally provided by providing an `opcod
 
 Prepare the payload of a close frame. Provide a code and optionally a reason. Optionally provide extension data.
 
+
+## Release Notes
+
+### 1.0.1
+
+* Bugfix: Syntax error for WebSocket handshake when no extra HTTP headers are provided.
+* Protocol compliance: Throw error if a control frame is fragmented or uses `extended_payload_length`.
+
 ## Copyright
 
 Copyright (c) 2024 Jon Lachlan.
