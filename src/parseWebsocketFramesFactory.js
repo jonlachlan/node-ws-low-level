@@ -244,6 +244,22 @@ export default function parseWebsocketFramesFactory (
                         .join('')
                 ), 2 /* base */);
 
+            /*
+             * Per Section 5.5 of RFC 6455, a control frame must not be fragmented nor use
+             * an extended payload
+             */
+            if(opcode >= 0x8) {
+                if(payload_len > 125)
+                    throw new Error(
+                        `control frame with extended payload`
+                    );
+
+                if(fin === 0)
+                    throw new Error(
+                        `control frame cannot be fragmented`
+                    );
+            }
+
             // Parse for extended payload length
 
             let has_extended_payload_length_16;
@@ -262,7 +278,7 @@ export default function parseWebsocketFramesFactory (
                     /*
                      * 2 bytes reserved for extended payload length
                     */
-                    
+
                     has_extended_payload_length_16 = 
                         true;
                     payload_length_value =
