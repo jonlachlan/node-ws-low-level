@@ -348,6 +348,11 @@ export default function parseWebsocketFramesFactory (
 
             }
 
+            if(maxInMemoryStoreSize !== undefined && payload_length_value > maxInMemoryStoreSize)
+                throw new Error(
+                    `message max in-memory store size exceeded`
+                );
+
             let 
                 payload_start_index,
                 masking_key_octets_start_index;
@@ -405,15 +410,6 @@ export default function parseWebsocketFramesFactory (
                     return;
                 } else {
                     // Payload is only incomplete part of frame
-                    if (
-                        maxInMemoryStoreSize != undefined
-                        &&
-                        payload_length_value > maxInMemoryStoreSize
-                    ) {
-                        throw new Error(
-                            'Message max in-memory store size exceeded'
-                        );
-                    }
 
                     const payload = 
                         new Uint8Array(payload_length_value);

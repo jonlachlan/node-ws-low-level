@@ -10,9 +10,7 @@ export default function getParsedWebsocketFramesFactory (
     /* Optional options object */
     {
         /*
-         * Optional <Integer> of max in-memory message store size, in bytes. This is not enforced
-         * on small messages, which do not necessarily make use of one of the in-memory store
-         * (PartialFrameStore).
+         * Optional <Integer> of max in-memory message store size, in bytes.
         */
         maxInMemoryStoreSize
     } = {}

@@ -86,12 +86,6 @@ export default function FragmentedMessageStore (
                 throw new Error(
                     'payload is not an instance of Uint8Array'
                 );
-
-            if (maxInMemoryStoreSize != undefined && payload.length > maxInMemoryStoreSize) {
-                throw new Error(
-                    'Message max in-memory store size exceeded'
-                );
-            }
                             
             messageStore.push({
                 rsv1,
@@ -111,7 +105,7 @@ export default function FragmentedMessageStore (
             );
 
             if (
-                maxInMemoryStoreSize != undefined
+                maxInMemoryStoreSize !== undefined
                 &&
                 payloads.reduce(
                     (
@@ -121,7 +115,7 @@ export default function FragmentedMessageStore (
                     , 0 /* initialValue */) > maxInMemoryStoreSize
             ) {
                 throw new Error(
-                    "Message max in-memory store size exceeded"
+                    "message max in-memory store size exceeded"
                 );
             }
         }

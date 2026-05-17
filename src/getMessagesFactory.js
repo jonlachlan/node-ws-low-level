@@ -14,7 +14,7 @@ import FragmentedMessageStore from './FragmentedMessageStore.js';
 export default function getMessagesFactory (
     socket /* <stream.Duplex> */,
     {
-        maxSize /* Integer <Number> */
+        maxInMemoryStoreSize /* Integer <Number> */
     } = {}
 ) {
 
@@ -25,13 +25,20 @@ export default function getMessagesFactory (
     
     const getParsedWebsocketFrames = 
         getParsedWebsocketFramesFactory(
-            socket
+            socket,
+            {
+                maxInMemoryStoreSize
+            }
         );
     
     const fragmentedMessage = 
-        new FragmentedMessageStore();
+        new FragmentedMessageStore(
+            {
+                maxInMemoryStoreSize
+            }
+        );
         
-    return async function* (maxSize) {
+    return async function* () {
         
         for await (
             const 
@@ -44,7 +51,7 @@ export default function getMessagesFactory (
                     opcode,
                     mask
                 } 
-            of getParsedWebsocketFrames(maxSize)
+            of getParsedWebsocketFrames()
         ) {
             if(
                 fin === 1

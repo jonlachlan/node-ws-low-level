@@ -5,7 +5,7 @@
 import parseWebsocketFramesFactory from './parseWebsocketFramesFactory.js';
 import prepareWebsocketFrame from './prepareWebsocketFrame.js';
 
-describe('getParsedWebsocketFramesFactory', function() {
+describe('parseWebsocketFramesFactory', function() {
     
     it(
         'returns an async generator \`parseMore\`'
@@ -2216,8 +2216,7 @@ describe('getParsedWebsocketFramesFactory', function() {
         });
 
         it(
-            'throws an error if maxInMemoryStoreSize is exceeded after a partial frame ' +
-            'with partially filled payload is stored'
+            'throws an error if maxInMemoryStoreSize is exceeded'
         , async function () {
                 const parseMore =
                     parseWebsocketFramesFactory(
@@ -2248,7 +2247,7 @@ describe('getParsedWebsocketFramesFactory', function() {
                             )
                         );
                 } catch (error) {
-                    expect(error.message).toEqual('Message max in-memory store size exceeded');
+                    expect(error.message).toEqual('message max in-memory store size exceeded');
 
                     errorsCount++;
                 }

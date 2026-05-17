@@ -222,10 +222,11 @@ function getMessagesFactory (
     socket /* <stream.Duplex> */,
     /* Optional options object */
     {
-        /* Optional <Integer> of max in-memory message store size, in bytes. This is not enforced 
-         * on small messages, which do not necessarily make use of the in-memory store class 
+        /* 
+         * Optional <Integer> of max in-memory message store size, in bytes. This 
+         * applies to both unfragmented messages and fragmented messages 
         */
-        maxInMemoryStoreSize 
+        maxInMemoryStoreSize /* Integer <Number> */
     } = {}
 ) {
     // ...
@@ -294,6 +295,9 @@ Prepare the payload of a close frame. Provide a code and optionally a reason. Op
 
 
 ## Release Notes
+### 1.0.2
+
+* Bugfix: `maxInMemoryStore` for `getMessagesFactory` -- policy was not being enforced in all cases. Documentation updated to indicate the policy applies to all messages.
 
 ### 1.0.1
 

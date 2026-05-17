@@ -496,39 +496,6 @@ describe('FragmentedMessageStore', function () {
                     }
                     expect(errorsCount).toEqual(0);
                 });
-
-            it(
-                'throws and error if max in memory store size is exceeded'
-                , function () {
-
-                    let errorsCount =
-                        0;
-                    const store =
-                        new FragmentedMessageStore(
-                            {
-                                maxInMemoryStoreSize: 24
-                            });
-
-                    try {
-                        store.start({
-                            rsv1: 0,
-                            rsv2: 0,
-                            rsv3: 0,
-                            opcode: 0x2,
-                            mask: 0,
-                            payload: new Uint8Array(25).fill(1)
-                        });
-                    } catch (error) {
-                        expect(error.message).toEqual(
-                            'Message max in-memory store size exceeded'
-                        );
-
-                        errorsCount++;
-                    }
-
-                    expect(errorsCount).toEqual(1);
-                }
-            );
         });
 
     describe(
@@ -596,7 +563,7 @@ describe('FragmentedMessageStore', function () {
                     store.addPayload(new Uint8Array(24).fill(2));
                 } catch (error) {
                     expect(error.message).toEqual(
-                        'Message max in-memory store size exceeded'
+                        'message max in-memory store size exceeded'
                     );
 
                     errorsCount++;
